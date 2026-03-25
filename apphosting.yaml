@@ -1,0 +1,31 @@
+runConfig:
+  cpu: 1
+  memoryMiB: 512
+  concurrency: 10
+  minInstances: 0
+  maxInstances: 3
+
+env:
+  - variable: NEXTAUTH_SECRET
+    value: lumefood-secret-key-for-qa-teaching-2026
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: AUTH_SECRET
+    value: lumefood-secret-key-for-qa-teaching-2026
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: DATABASE_URL
+    value: file:./dev.db
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NODE_ENV
+    value: production
+    availability:
+      - BUILD
+      - RUNTIME

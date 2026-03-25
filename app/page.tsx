@@ -362,7 +362,7 @@ export default async function HomePage() {
                         <div style={{ fontSize: '12px', color: '#717171' }}>
                           Mín.{' '}
                           <span style={{ fontWeight: '600' }}>
-                            {formatCurrency(restaurant.minOrder)}
+                            {formatCurrency(restaurant.minimumOrder)}
                           </span>
                         </div>
                       </div>

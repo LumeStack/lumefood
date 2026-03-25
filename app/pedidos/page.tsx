@@ -10,7 +10,7 @@ import { formatCurrency, ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/lib/
 interface Order {
   id: string
   status: string
-  totalAmount: number
+  total: number
   createdAt: string
   restaurant: {
     id: string
@@ -231,7 +231,7 @@ export default function PedidosPage() {
                   >
                     {order.items
                       .slice(0, 3)
-                      .map((i) => `${i.quantity}× ${i.menuItem.name}`)
+                      .map((i) => `${i.quantity}× ${i.name}`)
                       .join(', ')}
                     {order.items.length > 3 &&
                       ` e +${order.items.length - 3} itens`}
@@ -253,7 +253,7 @@ export default function PedidosPage() {
                         color: '#EA1D2C',
                       }}
                     >
-                      {formatCurrency(order.totalAmount)}
+                      {formatCurrency(order.total)}
                     </span>
                     <button
                       onClick={() => router.push(`/pedidos/${order.id}`)}

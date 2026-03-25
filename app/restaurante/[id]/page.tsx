@@ -219,7 +219,7 @@ export default async function RestaurantePage({
                 fontWeight: '600',
               }}
             >
-              🛒 Mín. {formatCurrency(restaurant.minOrder)}
+              🛒 Mín. {formatCurrency(restaurant.minimumOrder)}
             </div>
           </div>
         </div>

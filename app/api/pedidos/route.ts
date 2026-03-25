@@ -4,12 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 
 const schema = z.object({
-  addressStreet: z.string().min(1),
-  addressNumber: z.string().min(1),
-  addressDistrict: z.string().min(1),
-  addressCity: z.string().min(1),
-  addressZip: z.string().optional(),
-  addressComplement: z.string().optional(),
+  deliveryAddress: z.string().min(5),
   paymentMethod: z.enum(['PIX', 'CREDIT_CARD', 'DEBIT_CARD', 'CASH']),
   couponCode: z.string().optional(),
   notes: z.string().optional(),
@@ -70,7 +65,8 @@ export async function POST(request: NextRequest) {
 
   const total = subtotal + restaurant.deliveryFee - discount
 
-  const order = await prisma.order.create({
+  let order
+  try { order = await prisma.order.create({
     data: {
       userId: session.user.id,
       restaurantId: restaurant.id,
@@ -80,7 +76,12 @@ export async function POST(request: NextRequest) {
       discount,
       total,
       couponCode: couponCode?.toUpperCase() ?? null,
-      ...data.data,
+      paymentMethod: data.data.paymentMethod,
+      addressStreet: data.data.deliveryAddress,
+      addressNumber: '-',
+      addressDistrict: '-',
+      addressCity: 'São Paulo',
+      notes: data.data.notes,
       items: {
         create: cart.items.map((ci) => ({
           menuItemId: ci.menuItemId,
@@ -92,7 +93,9 @@ export async function POST(request: NextRequest) {
       statusHistory: { create: { status: 'PENDING' } },
     },
     include: { items: true, restaurant: { select: { name: true } } },
-  })
+  }) } catch (e: any) {
+    return Response.json({ error: e.message ?? 'Erro ao criar pedido' }, { status: 500 })
+  }
 
   // Limpar carrinho
   await prisma.cartItem.deleteMany({ where: { cartId: cart.id } })

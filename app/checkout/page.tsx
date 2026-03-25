@@ -57,7 +57,7 @@ export default function CheckoutPage() {
     (sum, item) => sum + item.menuItem.price * item.quantity,
     0
   )
-  const deliveryFee = subtotal > 0 ? 599 : 0
+  const deliveryFee = subtotal > 0 ? 5.99 : 0
   const total = subtotal + deliveryFee
 
   async function handleSubmit(e: React.FormEvent) {

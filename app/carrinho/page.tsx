@@ -15,9 +15,13 @@ interface CartItem {
     name: string
     price: number
     imageUrl: string | null
-    restaurant: {
-      id: string
-      name: string
+    category: {
+      restaurant: {
+        id: string
+        name: string
+        deliveryFee: number
+        minimumOrder: number
+      }
     }
   }
 }
@@ -107,8 +111,8 @@ export default function CarrinhoPage() {
       })
       const data = await res.json()
       if (res.ok) {
-        setAppliedCoupon({ code: coupon.trim(), discount: data.discount })
-        toast.success(`Cupom aplicado! Desconto de ${formatCurrency(data.discount)}`)
+        setAppliedCoupon({ code: coupon.trim(), discount: data.discountAmount })
+        toast.success(`Cupom aplicado! Desconto de ${formatCurrency(data.discountAmount)}`)
       } else {
         toast.error(data.error ?? 'Cupom inválido')
       }
@@ -125,11 +129,11 @@ export default function CarrinhoPage() {
     0
   )
   const discount = appliedCoupon?.discount ?? 0
-  const deliveryFee = subtotal > 0 ? 599 : 0
+  const deliveryFee = subtotal > 0 ? 5.99 : 0
   const total = subtotal - discount + deliveryFee
 
   const restaurantName =
-    items.length > 0 ? items[0].menuItem.restaurant.name : ''
+    items.length > 0 ? items[0].menuItem.category.restaurant.name : ''
 
   if (status === 'loading' || loading) {
     return (

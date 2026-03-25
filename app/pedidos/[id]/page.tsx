@@ -14,8 +14,8 @@ import {
 interface OrderItem {
   id: string
   quantity: number
-  unitPrice: number
-  menuItem: { name: string }
+  price: number
+  name: string
 }
 
 interface StatusHistory {
@@ -27,8 +27,11 @@ interface StatusHistory {
 interface Order {
   id: string
   status: string
-  totalAmount: number
-  deliveryAddress: string
+  total: number
+  subtotal: number
+  deliveryFee: number
+  discount: number
+  addressStreet: string
   paymentMethod: string
   createdAt: string
   review: { id: string } | null
@@ -219,7 +222,7 @@ export default function PedidoDetailPage({
           </div>
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', fontSize: '13px', color: '#717171' }}>
-            <span>📍 {order.deliveryAddress}</span>
+            <span>📍 {order.addressStreet}</span>
             <span>{PAYMENT_LABELS[order.paymentMethod] ?? order.paymentMethod}</span>
           </div>
         </div>
@@ -339,10 +342,10 @@ export default function PedidoDetailPage({
                   <span style={{ fontWeight: '700', color: '#EA1D2C', marginRight: '6px' }}>
                     {item.quantity}×
                   </span>
-                  {item.menuItem.name}
+                  {item.name}
                 </span>
                 <span style={{ color: '#717171', fontWeight: '600' }}>
-                  {formatCurrency((item.unitPrice ?? 0) * item.quantity)}
+                  {formatCurrency(item.price * item.quantity)}
                 </span>
               </div>
             ))}
@@ -359,7 +362,7 @@ export default function PedidoDetailPage({
             }}
           >
             <span style={{ color: '#3E3E3E' }}>Total</span>
-            <span style={{ color: '#EA1D2C' }}>{formatCurrency(order.totalAmount)}</span>
+            <span style={{ color: '#EA1D2C' }}>{formatCurrency(order.total)}</span>
           </div>
         </div>
 

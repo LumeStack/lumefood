@@ -1,10 +1,12 @@
 import { PrismaClient } from '@prisma/client'
+import { PrismaNeon } from '@prisma/adapter-neon'
+import { Pool } from '@neondatabase/serverless'
 import bcrypt from 'bcryptjs'
 
-if (!process.env.DATABASE_URL) {
-  process.env.DATABASE_URL = process.env.DATABASE_URL_UNPOOLED || process.env.POSTGRES_URL || ''
-}
-const prisma = new PrismaClient()
+const connectionString = process.env.DATABASE_URL_UNPOOLED || process.env.POSTGRES_URL || process.env.DATABASE_URL || ''
+const pool = new Pool({ connectionString })
+const adapter = new PrismaNeon(pool)
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   console.log('🌱 Iniciando seed...')

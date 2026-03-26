@@ -1,12 +1,16 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
 import bcrypt from 'bcryptjs'
 
-const adapter = new PrismaLibSql({ url: 'file:dev.db' })
-const prisma = new PrismaClient({ adapter })
+const prisma = new PrismaClient()
 
 async function main() {
   console.log('🌱 Iniciando seed...')
+
+  const existing = await prisma.user.count()
+  if (existing > 0) {
+    console.log('✅ Banco já populado, pulando seed.')
+    return
+  }
 
   // Limpar banco
   await prisma.review.deleteMany()

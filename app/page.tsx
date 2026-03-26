@@ -2,6 +2,7 @@ import Header from '@/components/header'
 import CategoryFilters from '@/components/category-filters'
 import Link from 'next/link'
 import { formatCurrency, formatDeliveryTime } from '@/lib/utils'
+import { prisma } from '@/lib/prisma'
 
 interface Restaurant {
   id: string
@@ -68,13 +69,9 @@ function StarRating({ rating }: { rating: number }) {
 
 async function getRestaurants(): Promise<Restaurant[]> {
   try {
-    const baseUrl = process.env.NEXTAUTH_URL ?? 'http://localhost:3000'
-    const res = await fetch(`${baseUrl}/api/restaurantes`, {
-      cache: 'no-store',
+    return await prisma.restaurant.findMany({
+      orderBy: [{ isOpen: 'desc' }, { rating: 'desc' }],
     })
-    if (!res.ok) return []
-    const data = await res.json()
-    return Array.isArray(data) ? data : data.restaurants ?? []
   } catch {
     return []
   }

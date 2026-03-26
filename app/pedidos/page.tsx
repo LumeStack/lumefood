@@ -19,8 +19,8 @@ interface Order {
   }
   items: {
     id: string
+    name: string
     quantity: number
-    menuItem: { name: string }
   }[]
 }
 

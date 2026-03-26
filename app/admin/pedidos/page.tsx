@@ -20,8 +20,8 @@ interface Order {
   user: { name: string | null; email: string }
   items: {
     id: string
+    name: string
     quantity: number
-    menuItem: { name: string }
   }[]
 }
 
@@ -310,7 +310,7 @@ export default function AdminPedidosPage() {
                 <p style={{ fontSize: '13px', color: '#717171', marginBottom: '14px' }}>
                   {order.items
                     .slice(0, 4)
-                    .map((i) => `${i.quantity}× ${i.menuItem.name}`)
+                    .map((i) => `${i.quantity}× ${i.name}`)
                     .join(', ')}
                   {order.items.length > 4 && ` e +${order.items.length - 4} itens`}
                 </p>

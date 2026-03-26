@@ -15,7 +15,7 @@ interface Order {
   restaurant: {
     id: string
     name: string
-    cuisine: string
+    category: string
   }
   items: {
     id: string

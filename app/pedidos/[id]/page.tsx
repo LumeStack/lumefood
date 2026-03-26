@@ -35,7 +35,7 @@ interface Order {
   paymentMethod: string
   createdAt: string
   review: { id: string } | null
-  restaurant: { id: string; name: string; cuisine: string }
+  restaurant: { id: string; name: string; category: string }
   items: OrderItem[]
   statusHistory?: StatusHistory[]
 }

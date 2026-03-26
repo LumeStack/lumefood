@@ -7,11 +7,11 @@ interface Restaurant {
   id: string
   name: string
   description: string | null
-  cuisine: string
-  rating: number | null
+  category: string
+  rating: number
   deliveryTime: number
   deliveryFee: number
-  minOrder: number
+  minimumOrder: number
   imageUrl: string | null
 }
 
@@ -233,7 +233,7 @@ export default async function HomePage() {
           >
             {restaurants.map((restaurant) => {
               const color =
-                CUISINE_COLORS[restaurant.cuisine] ?? CUISINE_COLORS.default
+                CUISINE_COLORS[restaurant.category] ?? CUISINE_COLORS.default
               return (
                 <Link
                   key={restaurant.id}
@@ -266,7 +266,7 @@ export default async function HomePage() {
                     >
                       {!restaurant.imageUrl && (
                         <span style={{ fontSize: '52px' }}>
-                          {CATEGORY_ICONS[restaurant.cuisine] ?? '🍽️'}
+                          {CATEGORY_ICONS[restaurant.category] ?? '🍽️'}
                         </span>
                       )}
                       {/* Cuisine badge */}
@@ -283,7 +283,7 @@ export default async function HomePage() {
                           borderRadius: '20px',
                         }}
                       >
-                        {restaurant.cuisine}
+                        {restaurant.category}
                       </span>
                     </div>
 

@@ -21,11 +21,11 @@ interface Restaurant {
   id: string
   name: string
   description: string | null
-  cuisine: string
-  rating: number | null
+  category: string
+  rating: number
   deliveryTime: number
   deliveryFee: number
-  minOrder: number
+  minimumOrder: number
   imageUrl: string | null
   menuCategories?: MenuCategory[]
 }
@@ -128,7 +128,7 @@ export default async function RestaurantePage({
               backdropFilter: 'blur(4px)',
             }}
           >
-            {restaurant.cuisine}
+            {restaurant.category}
           </div>
           <h1
             style={{

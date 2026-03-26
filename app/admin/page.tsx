@@ -9,7 +9,7 @@ import { formatCurrency, ORDER_STATUS_LABELS } from '@/lib/utils'
 interface Restaurant {
   id: string
   name: string
-  cuisine: string
+  category: string
 }
 
 interface Order {
@@ -97,7 +97,7 @@ export default function AdminDashboard() {
         </h1>
         {restaurant && (
           <p style={{ color: '#717171', fontSize: '14px' }}>
-            {restaurant.name} · {restaurant.cuisine}
+            {restaurant.name} · {restaurant.category}
           </p>
         )}
       </div>

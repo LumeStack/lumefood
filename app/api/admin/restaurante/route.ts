@@ -20,11 +20,14 @@ export async function GET() {
 const updateSchema = z.object({
   name: z.string().min(2).optional(),
   description: z.string().optional(),
+  category: z.string().optional(),
+  address: z.string().optional(),
+  phone: z.string().optional(),
+  imageUrl: z.string().url().nullable().optional(),
   isOpen: z.boolean().optional(),
   minimumOrder: z.number().positive().optional(),
   deliveryFee: z.number().nonnegative().optional(),
   deliveryTime: z.number().int().positive().optional(),
-  phone: z.string().optional(),
 })
 
 export async function PATCH(request: NextRequest) {

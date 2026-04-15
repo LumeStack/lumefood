@@ -40,7 +40,7 @@ export default function AdminCardapioPage() {
       return
     }
     if (status === 'authenticated') {
-      if ((session?.user as { role?: string })?.role !== 'ADMIN') {
+      if ((session?.user as { role?: string })?.role !== 'RESTAURANT_ADMIN') {
         router.push('/')
         return
       }

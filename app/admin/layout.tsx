@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Dashboard', icon: '📊' },
+  { href: '/admin/restaurante', label: 'Restaurante', icon: '🏪' },
   { href: '/admin/cardapio', label: 'Cardápio', icon: '🍽️' },
   { href: '/admin/pedidos', label: 'Pedidos', icon: '📦' },
 ]

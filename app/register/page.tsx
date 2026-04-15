@@ -99,7 +99,7 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} data-testid="register-form">
           <div style={{ marginBottom: '16px' }}>
             <label htmlFor="name" style={labelStyle}>
               Nome completo
@@ -111,6 +111,7 @@ export default function RegisterPage() {
               onChange={(e) => setName(e.target.value)}
               placeholder="João Silva"
               required
+              data-testid="register-input-name"
               style={inputStyle}
               onFocus={(e) =>
                 ((e.currentTarget as HTMLElement).style.borderColor = '#EA1D2C')
@@ -132,6 +133,7 @@ export default function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@email.com"
               required
+              data-testid="register-input-email"
               style={inputStyle}
               onFocus={(e) =>
                 ((e.currentTarget as HTMLElement).style.borderColor = '#EA1D2C')
@@ -154,6 +156,7 @@ export default function RegisterPage() {
               placeholder="Mínimo 6 caracteres"
               required
               minLength={6}
+              data-testid="register-input-password"
               style={inputStyle}
               onFocus={(e) =>
                 ((e.currentTarget as HTMLElement).style.borderColor = '#EA1D2C')
@@ -167,6 +170,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
+            data-testid="register-button-submit"
             style={{
               width: '100%',
               padding: '13px',
@@ -194,6 +198,7 @@ export default function RegisterPage() {
           Já tem conta?{' '}
           <Link
             href="/login"
+            data-testid="register-link-login"
             style={{
               color: '#EA1D2C',
               fontWeight: '600',

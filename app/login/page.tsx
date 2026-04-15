@@ -74,7 +74,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} data-testid="login-form">
           <div style={{ marginBottom: '16px' }}>
             <label
               htmlFor="email"
@@ -95,6 +95,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@email.com"
               required
+              data-testid="login-input-email"
               style={{
                 width: '100%',
                 padding: '12px 14px',
@@ -136,6 +137,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Sua senha"
               required
+              data-testid="login-input-password"
               style={{
                 width: '100%',
                 padding: '12px 14px',
@@ -160,6 +162,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
+            data-testid="login-button-submit"
             style={{
               width: '100%',
               padding: '13px',
@@ -188,6 +191,7 @@ export default function LoginPage() {
           Não tem conta?{' '}
           <Link
             href="/register"
+            data-testid="login-link-register"
             style={{
               color: '#EA1D2C',
               fontWeight: '600',

@@ -229,6 +229,7 @@ export default function CarrinhoPage() {
               </p>
               <button
                 onClick={() => router.push('/')}
+                data-testid="cart-button-browse-restaurants"
                 style={{
                   padding: '12px 28px',
                   background: '#EA1D2C',
@@ -255,6 +256,7 @@ export default function CarrinhoPage() {
               {items.map((item, idx) => (
                 <div
                   key={item.id}
+                  data-testid={`cart-item-${item.id}`}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -318,6 +320,7 @@ export default function CarrinhoPage() {
                       onClick={() =>
                         updateQuantity(item.id, item.quantity - 1)
                       }
+                      data-testid={`cart-button-decrease-${item.id}`}
                       style={{
                         width: '30px',
                         height: '30px',
@@ -337,6 +340,7 @@ export default function CarrinhoPage() {
                       −
                     </button>
                     <span
+                      data-testid={`cart-quantity-${item.id}`}
                       style={{
                         fontSize: '15px',
                         fontWeight: '700',
@@ -351,6 +355,7 @@ export default function CarrinhoPage() {
                       onClick={() =>
                         updateQuantity(item.id, item.quantity + 1)
                       }
+                      data-testid={`cart-button-increase-${item.id}`}
                       style={{
                         width: '30px',
                         height: '30px',
@@ -371,6 +376,7 @@ export default function CarrinhoPage() {
                     </button>
                     <button
                       onClick={() => removeItem(item.id)}
+                      data-testid={`cart-button-remove-${item.id}`}
                       style={{
                         width: '30px',
                         height: '30px',
@@ -450,6 +456,7 @@ export default function CarrinhoPage() {
                   </div>
                   <button
                     onClick={() => setAppliedCoupon(null)}
+                    data-testid="cart-button-remove-coupon"
                     style={{
                       background: 'none',
                       border: 'none',
@@ -468,6 +475,7 @@ export default function CarrinhoPage() {
                     value={coupon}
                     onChange={(e) => setCoupon(e.target.value.toUpperCase())}
                     placeholder="Digite o cupom"
+                    data-testid="cart-input-coupon"
                     style={{
                       flex: 1,
                       padding: '10px 14px',
@@ -488,6 +496,7 @@ export default function CarrinhoPage() {
                   <button
                     onClick={validateCoupon}
                     disabled={couponLoading || !coupon.trim()}
+                    data-testid="cart-button-apply-coupon"
                     style={{
                       padding: '10px 20px',
                       background:
@@ -599,6 +608,7 @@ export default function CarrinhoPage() {
 
             <button
               onClick={() => router.push('/checkout')}
+              data-testid="cart-button-checkout"
               style={{
                 width: '100%',
                 marginTop: '20px',

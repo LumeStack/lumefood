@@ -180,6 +180,7 @@ export default function AdminCardapioPage() {
         </div>
         <button
           onClick={openAdd}
+          data-testid="admin-cardapio-button-new"
           style={{
             padding: '11px 22px',
             background: '#EA1D2C',
@@ -300,6 +301,7 @@ export default function AdminCardapioPage() {
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <button
                         onClick={() => openEdit(item)}
+                        data-testid={`admin-cardapio-button-edit-${item.id}`}
                         style={{
                           padding: '7px 16px',
                           background: '#F5F5F5',
@@ -315,6 +317,7 @@ export default function AdminCardapioPage() {
                       </button>
                       <button
                         onClick={() => handleDelete(item.id, item.name)}
+                        data-testid={`admin-cardapio-button-delete-${item.id}`}
                         style={{
                           padding: '7px 16px',
                           background: '#FEE2E2',
@@ -377,6 +380,7 @@ export default function AdminCardapioPage() {
               </h2>
               <button
                 onClick={() => setShowModal(false)}
+                data-testid="admin-cardapio-modal-button-close"
                 style={{
                   background: 'none',
                   border: 'none',
@@ -390,7 +394,7 @@ export default function AdminCardapioPage() {
               </button>
             </div>
 
-            <form onSubmit={handleSave}>
+            <form onSubmit={handleSave} data-testid="admin-cardapio-modal-form">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div>
                   <label style={{ fontSize: '13px', fontWeight: '600', color: '#3E3E3E', display: 'block', marginBottom: '5px' }}>
@@ -401,6 +405,7 @@ export default function AdminCardapioPage() {
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     required
                     placeholder="Ex: Pizza Margherita"
+                    data-testid="admin-cardapio-input-name"
                     style={inputStyle}
                     onFocus={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#EA1D2C')}
                     onBlur={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#e5e5e5')}
@@ -415,6 +420,7 @@ export default function AdminCardapioPage() {
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
                     placeholder="Descrição do item"
                     rows={2}
+                    data-testid="admin-cardapio-input-description"
                     style={{ ...inputStyle, resize: 'vertical', fontFamily: 'inherit' }}
                     onFocus={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#EA1D2C')}
                     onBlur={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#e5e5e5')}
@@ -431,6 +437,7 @@ export default function AdminCardapioPage() {
                       required
                       placeholder="29,90"
                       type="text"
+                      data-testid="admin-cardapio-input-price"
                       style={inputStyle}
                       onFocus={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#EA1D2C')}
                       onBlur={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#e5e5e5')}
@@ -446,6 +453,7 @@ export default function AdminCardapioPage() {
                       required
                       placeholder="Ex: Pizzas"
                       list="categories-list"
+                      data-testid="admin-cardapio-input-category"
                       style={inputStyle}
                       onFocus={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#EA1D2C')}
                       onBlur={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#e5e5e5')}
@@ -466,6 +474,7 @@ export default function AdminCardapioPage() {
                     onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
                     placeholder="https://..."
                     type="url"
+                    data-testid="admin-cardapio-input-image-url"
                     style={inputStyle}
                     onFocus={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#EA1D2C')}
                     onBlur={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#e5e5e5')}
@@ -477,6 +486,7 @@ export default function AdminCardapioPage() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
+                  data-testid="admin-cardapio-modal-button-cancel"
                   style={{
                     flex: 1,
                     padding: '11px',
@@ -494,6 +504,7 @@ export default function AdminCardapioPage() {
                 <button
                   type="submit"
                   disabled={saving}
+                  data-testid="admin-cardapio-modal-button-save"
                   style={{
                     flex: 2,
                     padding: '11px',

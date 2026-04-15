@@ -132,7 +132,7 @@ export default function CheckoutPage() {
         }}
       >
         {/* Form */}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} data-testid="checkout-form">
           <h1
             style={{
               fontSize: '24px',
@@ -187,6 +187,7 @@ export default function CheckoutPage() {
                 placeholder="Rua das Flores, 123, Apto 4B – Bairro Centro, São Paulo, SP"
                 required
                 rows={3}
+                data-testid="checkout-input-address"
                 style={{
                   ...inputStyle,
                   resize: 'vertical',
@@ -237,6 +238,7 @@ export default function CheckoutPage() {
                   key={method.value}
                   type="button"
                   onClick={() => setPaymentMethod(method.value)}
+                  data-testid={`checkout-payment-${method.value.toLowerCase()}`}
                   style={{
                     padding: '14px',
                     borderRadius: '12px',
@@ -263,6 +265,7 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={submitting}
+            data-testid="checkout-button-submit"
             style={{
               width: '100%',
               padding: '15px',

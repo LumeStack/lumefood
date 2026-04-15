@@ -118,6 +118,7 @@ export default function AdminDashboard() {
             icon: '📦',
             color: '#3B82F6',
             bg: '#EFF6FF',
+            testId: 'admin-stat-total-orders',
           },
           {
             label: 'Pedidos pendentes',
@@ -125,6 +126,7 @@ export default function AdminDashboard() {
             icon: '⏳',
             color: '#F59E0B',
             bg: '#FFFBEB',
+            testId: 'admin-stat-pending-orders',
           },
           {
             label: 'Receita hoje',
@@ -132,10 +134,12 @@ export default function AdminDashboard() {
             icon: '💰',
             color: '#10B981',
             bg: '#ECFDF5',
+            testId: 'admin-stat-revenue',
           },
         ].map((stat) => (
           <div
             key={stat.label}
+            data-testid={stat.testId}
             style={{
               background: '#fff',
               borderRadius: '16px',
@@ -198,6 +202,7 @@ export default function AdminDashboard() {
           </h2>
           <button
             onClick={() => router.push('/admin/pedidos')}
+            data-testid="admin-dashboard-button-view-all"
             style={{
               background: 'none',
               border: 'none',
@@ -252,6 +257,7 @@ export default function AdminDashboard() {
                 return (
                   <tr
                     key={order.id}
+                    data-testid={`admin-order-row-${order.id}`}
                     style={{
                       borderTop: idx > 0 ? '1px solid #f5f5f5' : 'none',
                     }}

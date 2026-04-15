@@ -158,6 +158,7 @@ export default function AdminPedidosPage() {
         </div>
         <button
           onClick={fetchOrders}
+          data-testid="admin-orders-button-refresh"
           style={{
             padding: '9px 18px',
             background: '#f5f5f5',
@@ -193,6 +194,7 @@ export default function AdminPedidosPage() {
             <button
               key={s}
               onClick={() => setStatusFilter(s)}
+              data-testid={`admin-orders-tab-${s.toLowerCase()}`}
               style={{
                 padding: '8px 16px',
                 borderRadius: '20px',
@@ -253,6 +255,7 @@ export default function AdminPedidosPage() {
             return (
               <div
                 key={order.id}
+                data-testid={`admin-order-card-${order.id}`}
                 style={{
                   background: '#fff',
                   borderRadius: '16px',
@@ -333,6 +336,7 @@ export default function AdminPedidosPage() {
                           key={nextStatus}
                           onClick={() => updateStatus(order.id, nextStatus)}
                           disabled={isUpdating}
+                          data-testid={`admin-order-status-${order.id}-${nextStatus.toLowerCase()}`}
                           style={{
                             padding: '8px 16px',
                             background: isUpdating ? '#f0f0f0' : nextSc.bg,

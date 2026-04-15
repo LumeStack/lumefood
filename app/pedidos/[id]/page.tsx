@@ -164,6 +164,7 @@ export default function PedidoDetailPage({
         {/* Back */}
         <button
           onClick={() => router.push('/pedidos')}
+          data-testid="order-detail-button-back"
           style={{
             background: 'none',
             border: 'none',
@@ -397,6 +398,7 @@ export default function PedidoDetailPage({
                   key={star}
                   type="button"
                   onClick={() => setRating(star)}
+                  data-testid={`order-detail-star-${star}`}
                   style={{
                     fontSize: '32px',
                     background: 'none',
@@ -417,6 +419,7 @@ export default function PedidoDetailPage({
               onChange={(e) => setComment(e.target.value)}
               placeholder="Conte como foi sua experiência (opcional)"
               rows={3}
+              data-testid="order-detail-input-comment"
               style={{
                 width: '100%',
                 padding: '12px 14px',
@@ -440,6 +443,7 @@ export default function PedidoDetailPage({
             <button
               onClick={submitReview}
               disabled={reviewSubmitting}
+              data-testid="order-detail-button-submit-review"
               style={{
                 padding: '11px 28px',
                 background: reviewSubmitting ? '#ccc' : '#EA1D2C',

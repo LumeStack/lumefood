@@ -235,6 +235,7 @@ export default async function HomePage() {
                 <Link
                   key={restaurant.id}
                   href={`/restaurante/${restaurant.id}`}
+                  data-testid={`restaurant-card-${restaurant.id}`}
                   style={{ textDecoration: 'none' }}
                 >
                   <div

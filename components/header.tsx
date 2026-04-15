@@ -52,6 +52,7 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="/"
+          data-testid="header-link-logo"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -76,6 +77,7 @@ export default function Header() {
         <nav style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Link
             href="/"
+            data-testid="header-link-home"
             style={{
               padding: '8px 14px',
               borderRadius: '8px',
@@ -98,6 +100,7 @@ export default function Header() {
           {status === 'authenticated' && (
             <Link
               href="/pedidos"
+              data-testid="header-link-pedidos"
               style={{
                 padding: '8px 14px',
                 borderRadius: '8px',
@@ -122,6 +125,7 @@ export default function Header() {
           {status === 'authenticated' && (
             <Link
               href="/carrinho"
+              data-testid="header-link-cart"
               style={{
                 position: 'relative',
                 display: 'flex',
@@ -138,6 +142,7 @@ export default function Header() {
               <span style={{ fontSize: '20px' }}>🛒</span>
               {cartCount > 0 && (
                 <span
+                  data-testid="header-cart-count"
                   style={{
                     position: 'absolute',
                     top: '-2px',
@@ -201,6 +206,7 @@ export default function Header() {
               </div>
               <button
                 onClick={() => signOut({ callbackUrl: '/' })}
+                data-testid="header-button-logout"
                 style={{
                   padding: '8px 16px',
                   borderRadius: '8px',
@@ -228,6 +234,7 @@ export default function Header() {
           ) : (
             <Link
               href="/login"
+              data-testid="header-link-login"
               style={{
                 padding: '9px 20px',
                 borderRadius: '8px',

@@ -133,6 +133,7 @@ export default function PedidosPage() {
             </p>
             <button
               onClick={() => router.push('/')}
+              data-testid="orders-button-browse-restaurants"
               style={{
                 padding: '12px 28px',
                 background: '#EA1D2C',
@@ -176,6 +177,7 @@ export default function PedidosPage() {
               return (
                 <div
                   key={order.id}
+                  data-testid={`order-card-${order.id}`}
                   style={{
                     background: '#fff',
                     borderRadius: '16px',
@@ -257,6 +259,7 @@ export default function PedidosPage() {
                     </span>
                     <button
                       onClick={() => router.push(`/pedidos/${order.id}`)}
+                      data-testid={`order-button-detail-${order.id}`}
                       style={{
                         padding: '9px 20px',
                         background: '#EA1D2C',

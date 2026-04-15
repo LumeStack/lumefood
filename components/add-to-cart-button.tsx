@@ -52,6 +52,7 @@ export default function AddToCartButton({
     <button
       onClick={handleAddToCart}
       disabled={loading || status === 'loading'}
+      data-testid={`add-to-cart-${menuItemId}`}
       style={{
         padding: '8px 16px',
         background: loading ? '#ccc' : '#EA1D2C',

@@ -29,6 +29,7 @@ export default function CategoryFilters() {
         {CATEGORIES.map((cat) => (
           <button
             key={cat}
+            data-testid={`category-button-${cat.toLowerCase().replace(/\s+/g, '-')}`}
             style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
               padding: '12px 16px', borderRadius: '12px', border: '1.5px solid #f0f0f0',

@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+/test-results
+/playwright-report
+/tests/.auth
 
 # next.js
 /.next/
@@ -43,3 +46,6 @@ next-env.d.ts
 /app/generated/prisma
 dev.db
 .claude/
+
+.vercel
+.env*.local

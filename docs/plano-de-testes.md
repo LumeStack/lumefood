@@ -13,9 +13,8 @@
 1. [O que será testado](#1-o-que-será-testado)
 2. [Como será testado](#2-como-será-testado)
 3. [Quem vai testar](#3-quem-vai-testar)
-4. [Quando vai acontecer](#4-quando-vai-acontecer)
-5. [Riscos identificados](#5-riscos-identificados)
-6. [Escolha da ferramenta de automação](#6-escolha-da-ferramenta-de-automação)
+4. [Riscos identificados](#4-riscos-identificados)
+5. [Escolha da ferramenta de automação](#5-escolha-da-ferramenta-de-automação)
 
 ---
 
@@ -114,36 +113,6 @@
 
 ---
 
-### 1.3 Módulo API (Integração)
-
-Todas as rotas REST abaixo serão testadas quanto a:
-- Resposta correta para requisições válidas (2xx)
-- Rejeição de dados inválidos (400)
-- Proteção de autenticação (401/403)
-- Comportamento de recurso não encontrado (404)
-
-| Rota | Método | Descrição |
-|------|--------|-----------|
-| `/api/register` | POST | Registro de usuário |
-| `/api/auth/[...nextauth]` | POST | Login/logout |
-| `/api/restaurantes` | GET | Listagem pública de restaurantes |
-| `/api/restaurantes/[id]` | GET | Detalhes do restaurante |
-| `/api/restaurantes/[id]/cardapio` | GET | Cardápio do restaurante |
-| `/api/carrinho` | GET/DELETE | Carrinho do usuário |
-| `/api/carrinho/items` | POST | Adicionar item ao carrinho |
-| `/api/carrinho/items/[id]` | PATCH/DELETE | Atualizar/remover item |
-| `/api/pedidos` | GET/POST | Listar/criar pedidos |
-| `/api/pedidos/[id]` | GET | Detalhes do pedido |
-| `/api/pedidos/[id]/status` | PATCH | Atualizar status (admin) |
-| `/api/avaliacoes` | POST | Criar avaliação |
-| `/api/cupons/validar` | POST | Validar cupom |
-| `/api/admin/restaurante` | GET/PATCH | Gerenciar restaurante |
-| `/api/admin/cardapio` | GET/POST | Gerenciar cardápio |
-| `/api/admin/cardapio/[id]` | PATCH/DELETE | Editar/excluir item |
-| `/api/admin/pedidos` | GET | Pedidos do restaurante (admin) |
-
----
-
 ## 2. Como será testado
 
 ### 2.1 Testes Manuais
@@ -235,94 +204,40 @@ Uso do contexto `request` do Playwright para validar as respostas das rotas REST
 
 | Papel | Responsabilidade |
 |-------|-----------------|
-| **QA Lead** | Definir plano, priorizar casos, revisar automações, emitir relatórios de qualidade |
 | **QA Engineer** | Executar testes manuais, escrever e manter scripts Playwright |
 | **Desenvolvedores** | Escrever testes unitários de funções e APIs, corrigir falhas identificadas |
 | **Product Owner** | Executar testes de aceitação (UAT) em ambiente de homologação antes de cada release |
 
 **Time de QA — LumeStack**  
-Ponto de contato: QA Lead da organização LumeStack  
 Repositório: [https://github.com/LumeStack/lumefood](https://github.com/LumeStack/lumefood)
 
 ---
 
-## 4. Quando vai acontecer
-
-### Cronograma 2026
-
-```
-Q1 (Jan–Mar) ─────────────────────────────────────────────
-  Setup do ambiente Playwright
-  Configuração de CI (execução automática em PRs)
-  Testes de autenticação (F-001 a F-004)
-  Testes da home e listagem de restaurantes (F-005 a F-007)
-  Execução de testes manuais exploratórios — rodada 1
-
-Q2 (Abr–Jun) ─────────────────────────────────────────────
-  Testes de cardápio e restaurante (F-008 a F-010)
-  Testes de carrinho completo (F-011 a F-017)
-  Testes de checkout (F-018 a F-023)
-  Testes de API: carrinho, pedidos e cupons
-  Execução de testes manuais exploratórios — rodada 2
-
-Q3 (Jul–Set) ─────────────────────────────────────────────
-  Testes do módulo admin — dashboard e restaurante (F-029 a F-035)
-  Testes do admin — cardápio (F-036 a F-040)
-  Testes do admin — pedidos e transições de status (F-041 a F-045)
-  Testes de API: admin endpoints
-  Execução de testes manuais exploratórios — rodada 3
-
-Q4 (Out–Dez) ─────────────────────────────────────────────
-  Suite completa de regressão automatizada
-  Revisão e atualização de todos os casos de teste
-  Relatório final de qualidade
-  Manutenção da suite (ajuste de seletores, novos fluxos)
-  Planejamento do ciclo de testes 2027
-```
-
-### Critérios de Entrada e Saída
-
-**Critérios de entrada (para iniciar os testes):**
-- Ambiente de staging disponível e estável
-- Deploy da versão a ser testada realizado
-- `data-testid` presentes nos elementos críticos (já implementado)
-
-**Critérios de saída (para aprovar um release):**
-- 100% dos casos críticos (happy path) passando
-- Nenhum bug de severidade Alta ou Crítica em aberto
-- Suite de regressão automatizada executada sem falhas
-
----
-
-## 5. Riscos identificados
+## 4. Riscos identificados
 
 Os riscos abaixo foram levantados a partir da análise direta do código-fonte do LumeFood.
 
-| # | Risco | Severidade | Área afetada |
-|---|-------|-----------|--------------|
-| R-01 | **Race condition em status de pedido** — Sem lock de banco; atualizações concorrentes podem gerar transições inválidas | Alta | API `/pedidos/[id]/status` |
-| R-02 | **Concorrência em cupons** — `usageCount` incrementado após validação; uso simultâneo pode ultrapassar o `usageLimit` | Alta | API `/cupons/validar` e `/pedidos` |
-| R-03 | **Sem processamento real de pagamento** — Pedidos são criados sem verificar se o pagamento foi aprovado | Alta | Checkout, `/api/pedidos` |
-| R-04 | **Sem paginação nas APIs** — Endpoints retornam todos os registros; pode causar timeout em produção com grande volume | Média | Todos os GETs de listagem |
-| R-05 | **Precisão Float em preços** — Preços armazenados como `Float` podem gerar erros de arredondamento (ex: R$ 29,99 × 3 = R$ 89,97000...001) | Média | Carrinho, checkout, pedidos |
-| R-06 | **NextAuth em versão beta** — `next-auth@5.0.0-beta.30` pode ter instabilidades de sessão ou mudanças de API | Média | Autenticação em toda a aplicação |
-| R-07 | **Sem rate limiting** — Nenhum endpoint possui limite de requisições, permitindo spam de cadastros, pedidos e avaliações | Média | Todos os endpoints públicos |
-| R-08 | **Sem verificação de e-mail** — Qualquer e-mail pode ser cadastrado sem confirmação, permitindo identidades falsas | Baixa | `/api/register` |
-| R-09 | **isOpen verificado apenas na criação** — Se o restaurante fechar durante o checkout, o pedido ainda pode ser criado | Baixa | Checkout, `/api/pedidos` POST |
-| R-10 | **Dependência de URL interna** — `NEXTAUTH_URL` é usado como base para chamadas server-side; configuração incorreta quebra listagens | Média | `/app/page.tsx`, `/restaurante/[id]` |
+| # | Risco | Severidade | Como identificar na UI |
+|---|-------|-----------|------------------------|
+| R-01 | **Sem processamento real de pagamento** — Pedidos são criados sem verificar se o pagamento foi aprovado; qualquer forma de pagamento é aceita imediatamente | Alta | Selecionar qualquer pagamento no checkout e finalizar — pedido é criado sem validação |
+| R-02 | **Precisão Float em preços** — Preços armazenados como `Float` podem gerar erros de arredondamento (ex: R$ 29,99 × 3 = R$ 89,97000...001) | Média | Observar o total no carrinho e no resumo do pedido ao adicionar múltiplos itens |
+| R-03 | **NextAuth em versão beta** — `next-auth@5.0.0-beta.30` pode causar quedas de sessão inesperadas ou falhas no login | Média | Sessão pode expirar ou deslogar o usuário sem aviso durante a navegação |
+| R-04 | **Sem verificação de e-mail** — Qualquer e-mail pode ser cadastrado sem confirmação, incluindo endereços inválidos ou fictícios | Baixa | Tentar registrar com e-mails como `teste@naoexiste.xyz` — conta é criada normalmente |
+| R-05 | **isOpen verificado apenas na criação do pedido** — Se o restaurante fechar enquanto o usuário está no checkout, o pedido ainda pode ser finalizado | Baixa | Abrir o checkout, fechar o restaurante via admin e tentar submeter o pedido |
 
 ### Estratégia de mitigação recomendada
 
-- **R-01 e R-02:** Implementar transações Prisma com `SELECT FOR UPDATE` nos fluxos de status e cupom
-- **R-04:** Adicionar paginação (`page`, `limit`) nas APIs de listagem
-- **R-05:** Migrar preços para `Int` (centavos) ou usar `Decimal` no Prisma
-- **R-07:** Integrar middleware de rate limiting (ex: `next-rate-limit` ou Vercel Edge Middleware)
+- **R-01:** Implementar integração com gateway de pagamento (ex: Stripe, Mercado Pago) antes do go-live em produção
+- **R-02:** Migrar preços para `Int` (centavos) ou usar `Decimal` no Prisma
+- **R-03:** Monitorar changelogs do NextAuth; fixar a versão no `package.json` e testar regressão a cada atualização
+- **R-04:** Adicionar validação de formato de e-mail e, futuramente, confirmação por link
+- **R-05:** Verificar `isOpen` no momento exato do POST em `/api/pedidos`, não somente na renderização do checkout
 
 ---
 
-## 6. Escolha da ferramenta de automação
+## 5. Escolha da ferramenta de automação
 
-### 6.1 Comparativo: Playwright vs Cypress vs Selenium (JavaScript/TypeScript)
+### 5.1 Comparativo: Playwright vs Cypress vs Selenium (JavaScript/TypeScript)
 
 | Critério | Playwright | Cypress | Selenium |
 |----------|-----------|---------|----------|
@@ -340,7 +255,7 @@ Os riscos abaixo foram levantados a partir da análise direta do código-fonte d
 | **Flakiness (instabilidade)** | ✅ Auto-wait robusto | ✅ Auto-retry integrado | ❌ Alta incidência de testes instáveis |
 | **Shadow DOM / iframes** | ✅ Suporte nativo | ❌ Limitado | ✅ Suportado via WebDriver |
 
-### 6.2 Decisão: Playwright ✅
+### 5.2 Decisão: Playwright ✅
 
 **Justificativa:**
 
@@ -358,7 +273,7 @@ O **Playwright** é a escolha ideal para o LumeFood pelos seguintes motivos:
 
 6. **Trace Viewer e Codegen:** Facilitam a criação de testes e a análise de falhas, reduzindo o tempo de diagnóstico para o time de QA.
 
-### 6.3 Configuração inicial recomendada
+### 5.3 Configuração inicial recomendada
 
 ```bash
 # Instalar Playwright no projeto
